@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int rows = 5, columns = 4;
+    int arr[rows][columns] = {
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12},
+        {13, 14, 15, 16},
+        {17, 18, 19, 20},
+    };
+
+    vector<vector<int>> ans(rows + columns - 1);
+    // first we traverse from columns instead of rows as we want to go
+    // left to right in diagonal
+    for (int col = 0; col < columns; col++)
+    {
+        for (int row = 0; row < rows; row++)
+        {
+            // push (row+col)th vector with elements that satisfy the cond
+            // if we want sum of diagonal idx as 2;
+            // push vector with indices 2,0 ; 1,1 ; 0,2  (left idx = row, right idx = col)
+            ans[row + col].push_back(arr[row][col]);
+            // NOTE: if we swap "rows" and "columns" in for loops
+            // and push back arr[col][row], we get diagonal elements
+            // right to left from idx 0;
+        }
+    }
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        for (int j = 0; j < ans[i].size(); j++)
+            cout << ans[i][j] << " ";
+
+        cout << endl;
+    }
+    return 0;
+}
