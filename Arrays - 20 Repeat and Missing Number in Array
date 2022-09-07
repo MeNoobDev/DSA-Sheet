@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    // algorithm used is swap sort
+    // can also do mathematically
+    // making 2 equations sum to n
+    // and sum to n of squares
+
+    int arr[] = {2, 3, 1, 5, 1, 7, 6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] != arr[arr[i] - 1])
+            swap(arr[i], arr[arr[i] - 1]);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] != i + 1)
+        {
+            cout << "missing " << i + 1 << endl;
+            cout << "Duplicate " << arr[i] << endl;
+        }
+    }
+
+    return 0;
+}
