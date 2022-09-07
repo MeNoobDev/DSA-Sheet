@@ -1,0 +1,36 @@
+int search(vector<int>& nums, int target) {
+        
+        int l = 0;
+        int r = nums.size()-1;
+        
+        while(l<=r){
+            int mid = (l+r)/2;
+            if(nums[mid]==target)
+                return mid;
+        
+            // left sorted portion
+            if(nums[mid] >= nums[l]) // this means that arr from
+                // l to mid is sorted
+            {
+                // mid is the largest element
+                // hence is target is larger than mid element
+                // we move left to mid + 1
+                if(target>nums[mid] || target < nums[l])
+                    l = mid+1;
+                
+                // if mid is smaller than target and
+                // array is sorted from left to mid
+                // we search in left to mid -1
+                else
+                    r = mid-1;
+            }
+            
+            else{
+                if(target<nums[mid] || target > nums[r])
+                    r = mid-1;
+                else
+                    l = mid+1;
+            }
+        }
+        return -1;
+    }
