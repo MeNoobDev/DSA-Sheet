@@ -1,0 +1,129 @@
+#include <bits/stdc++.h>
+// #include <iostream>
+using namespace std;
+
+class Stack
+{
+    // create a class "Stack" with attributes: top and arr[max]
+    static const int max = 100;
+    int arr[max];
+    int top;
+
+public:
+    // constructer that creates a stack with arr size max and
+    // top value as -1
+    Stack()
+    {
+        top = -1;
+    }
+    // stack has following functions
+    int pop();        // returns the top most value and decrements top
+    void push(int x); // adds element to stack
+    bool isEmpty();   // returns true if stack is empty
+    bool isFull();    // returns true if stack is full
+};
+
+bool Stack::isEmpty()
+{
+    return top == -1;
+}
+
+bool Stack::isFull()
+{
+    return top == max - 1;
+}
+
+int Stack::pop()
+{
+    if (isEmpty())
+    {
+        cout << "Stack Underflow";
+        return -1;
+    }
+    int x = arr[top];
+    top--;
+    return x;
+}
+void Stack::push(int x)
+{
+    if (isFull())
+    {
+        cout << "Stack Overflow";
+        return;
+    }
+    top++;
+    arr[top] = x;
+}
+
+// Create a class supportStack that inherits public functions from
+// the class Stack
+class supportStack : public Stack
+{
+    // once supportStack is called, create a Stack(original stack class)
+    // with name as minimum
+    Stack minimum;
+
+public:
+    // class supportStack has three functions in addition to
+    // functions of Stack, two of them are overloaded, pop and push
+    int pop();        // pops top most element of supportStack
+    void push(int x); // adds element to supportStack as well as main Stack
+    int getMin();     // returns the top value of supportStack which is minimum
+};
+
+int supportStack::getMin()
+{
+    int x = minimum.pop();
+    minimum.push(x);
+    return x;
+}
+
+int supportStack::pop()
+{
+    // pops element from both main stack as well as supportStack
+    // and returns it
+    int x = Stack::pop();
+    minimum.pop();
+    return x;
+}
+void supportStack::push(int x)
+{
+    // is mainStack is empty, this function adds the value to
+    // both stacks
+    if (isEmpty() == true)
+    {
+        Stack::push(x);
+        minimum.push(x);
+    }
+    else
+    {
+        // if main stack is not empty,
+        // we add x to main stack
+        Stack::push(x);
+
+        // we take the top element of supportStack
+        int y = minimum.pop();
+        minimum.push(y);
+        // and compare with x
+        // if x<y , x is smaller and hence
+        // we push it to supportstack to make it smallest element of stack
+        if (x < y)
+            minimum.push(x);
+        // else y is smallest and we push y
+        else
+            minimum.push(y);
+    }
+}
+
+int main()
+{
+    supportStack s;
+    s.push(10);
+    s.push(20);
+    s.push(30);
+    cout << s.getMin() << endl;
+    s.push(5);
+    cout << s.getMin();
+
+    return 0;
+}
