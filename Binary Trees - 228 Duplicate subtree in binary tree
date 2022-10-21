@@ -1,0 +1,29 @@
+unordered_map<string,int> m;
+    string solve(Node* root){
+        if(!root) // if null, return $
+            return "$";
+        string s="";
+        if(!root->right && !root->left){
+            s = "#"+to_string(root->data); // if leaf node
+            return s;
+        }
+        // not leaf node(call function for left and right subtree)
+        // we add hash so we can differentiate between
+        // eg: 111 and 111 will give same
+        // #1#11 and #11#1 will be different
+        s = s+"#"+to_string(root->data);
+        s = s+"#"+solve(root->left);
+        s = s+"#"+solve(root->right);
+        m[s]++;
+        return s;
+    }
+    int dupSub(Node *root) {
+         // code here
+         m.clear();
+         solve(root);
+         for(auto it: m){
+             if(it.second>=2)
+                return 1;
+         }
+         return 0;
+    }
