@@ -1,0 +1,34 @@
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+    // Your code goes here
+    if(root==NULL) 
+        return;
+    // if key is present at root
+    if(root->key == key){
+        // the maximum value in left subtree is predecessor
+        if(root->left !=NULL){
+            Node* tmp = root->left;
+            while(tmp->right)
+                tmp = tmp->right;
+            pre = tmp;
+        }
+        // the minimum value in right subtree is successor
+        if(root->right !=NULL){
+            Node* tmp = root->right;
+            while(tmp->left)
+                tmp = tmp->left;
+            suc = tmp;
+        }
+        return;
+    }
+    // if key is smaller than root's key, go to left subtree
+    if(key < root->key){
+        suc = root;
+        findPreSuc(root->left,pre,suc,key);
+    }
+    // if key is larger than root's key, go to right subtree
+    else{
+        pre = root;
+        findPreSuc(root->right,pre,suc,key);
+    }
+}
